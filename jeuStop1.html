@@ -1,0 +1,415 @@
+<html>
+    <head>
+        <title>
+            Node.js chat
+        </title>
+        <style>
+            #contentWrap{
+                display: none;
+            }
+            #chatWrap{
+                float: left;
+				width: 20%;
+            }
+            #chat{
+                position: relative;
+                width: 100%;
+                float:left;
+                min-height:100px;
+                height: 90%;
+                overflow: auto;
+            }
+			#users{
+				float: right;
+				width: 20%;
+			}
+			#answers{
+			float:center;
+			width: 60%;
+			}
+			#allAnswers
+			{display:none;
+			float:center;
+			width: 60%;}
+			
+        </style>
+        
+        <script src="https://code.jquery.com/jquery.js"></script>
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+        
+    </head>
+    <body>
+    
+        <div class="container">
+        
+            <div class="page-header">
+                <h1>Node.js Chat <small> Developed by <a href="http://geekytheory.com" target="_blank">Geeky Theory</a></small></h1>
+                <span class="input-group-btn" id="Lettre" style="display: none;">
+                	<button type="button" class="btn btn-success" style="float: right; ">Lettre</button>
+                	<input id="let" class="form-control input-lg" type="text">
+                </span>
+            </div>
+            
+            <div class="input-group" style="width:300px;text-align:center;margin:0 auto;" id="nickWrap">
+                <input id="nickname" class="form-control input-lg" type="text" placeholder="Enter your username">
+                <span class="input-group-btn">
+                    <button class="btn btn-lg btn-primary" type="submit" id="setNick">OK</button>
+                </span>
+            </div>
+            <div class="alert fade in alert-danger alert-dismissable" data-dismiss="alert" id="login-error" style="display:none;">
+                <button type="button" class="close" id="closeAlert">×</button>
+                That username is already taken. Try again.
+            </div>
+            
+            <div id="contentWrap" class="row" style="height: 70%;">
+                <div class="col-md-2"></div>
+                <div id="chatWrap"  class="col-md-3">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">Chat</div>
+                        <div id="chat" class="panel-body"></div>
+                    </div>
+                    
+                    <div>
+                        <form id="send-message" class="input-group" style="text-align:center;margin:0 auto;">
+                        <input id="message" class="form-control input-lg" type="text">
+                        <span class="input-group-btn">
+                            <button class="btn btn-lg btn-primary" type="submit">Send</button>
+                        </span>
+                        </form>
+                    </div>
+                    
+                    <!--
+                        <input size="35" id="message"></input>
+                        <input type="submit"></input>
+                    </form>-->
+                </div>
+                <div id="answers" class="col-md-5" >
+                <table class="table table-bordered">
+				  <thead>
+					<tr>
+					  <th>#</th>
+					  <th>Classe</th>
+					  <th>Réponse</th>
+					</tr>
+				  </thead>
+				  <tbody>
+					<tr>
+					  <th scope="row">1</th>
+					  <th>Animaux</th>
+					  <td><input id="reponse1" class="form-control input-lg" type="text" placeholder="Ta réponse ici"></td>
+					</tr>
+					<tr>
+					  <th scope="row">2</th>
+					  <th>Pays</th>
+					  <td><input id="reponse2" class="form-control input-lg" type="text" placeholder="Ta réponse ici"></td>
+					</tr>
+					<tr>
+					  <th scope="row">3</th>
+					  <th>Films</th>
+						<td><input id="reponse3" class="form-control input-lg" type="text" placeholder="Ta réponse ici"></td>    </tr>
+					<tr>
+					  <th scope="row">4</th>
+					  <th>Fleuves</th>
+					  <td><input id="reponse4" class="form-control input-lg" type="text" placeholder="Ta réponse ici"></td>
+					</tr>
+					<tr>
+					  <th scope="row">5</th>
+					  <th>Langages de programmation</th>
+					  <td><input id="reponse5" class="form-control input-lg" type="text" placeholder="Ta réponse ici"></td>
+					</tr>
+					<tr>
+					  <th scope="row">6</th>
+					  <th>Villes</th>
+					  <td><input id="reponse6" class="form-control input-lg" type="text" placeholder="Ta réponse ici"></td>
+					</tr>
+				  </tbody>
+				</table>
+				<span class="input-group-btn">
+				
+                            <button type="button" class="btn btn-danger" type="submit" id="STOP">STOP</button>
+                        </span>
+                </div>
+				
+				<div id="allAnswers" class="col-md-5" >
+                <table class="table table-bordered">
+				  <thead>
+					<tr>
+					  <th>Classe</th>
+					  <th>Réponse joeur1</th>
+					  <th>Score</th>
+					  <th>Réponse joeur2</th>
+					  <th>Score</th>
+					</tr>
+				  </thead>
+				  <tbody>
+					<tr>
+					  <th>Animaux</th>
+					  <td id="11"></td>
+					  <td id="r1"></td>
+					  <td id="21"></></td>
+					  <td id="r7"></td>
+					</tr>
+					<tr>
+					  <<th>Pays</th>
+					  <td id="12"></td>
+					  <td id="r2"></></td>
+					  <td id="22"></></td>
+					  <td id="r8"></td>
+					</tr>
+					<tr>
+					  <th>Films</th>
+					  <td id="13"></td>
+					  <td id="r3"></></td>
+					  <td id="23"></></td>
+					  <td id="r9"></td>
+					<tr>
+					  <th>Fleuves</th>
+					  <td id="14"></td>
+					  <td id="r4"></></td>
+					  <td id="24"></></td>
+					  <td id="r10"></td>
+					</tr>
+					<tr>
+					  <th >Langages</th>
+					  <td id="15"></td>
+					  <td id="r5"></></td>
+					  <td id="25"></></td>
+					  <td id="r11"></td>
+					</tr>
+					<tr>
+					  <th>Villes</th>
+					  <td id="16"></td>
+					  <td id="r6"></></td>
+					  <td id="26"></></td>
+					  <td id="r12"></td>
+					</tr>
+				  </tbody>
+				</table>
+				<span class="input-group-btn">
+                            <button type="button" class="btn btn-danger" type="submit" id="STOP">STOP</button>
+                        </span>
+                </div>
+				
+                <div class="col-md-2">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            Users
+                        </div>
+                        <div id="users" class="panel-body"></div>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            jQuery(function($) {
+               var socket = io.connect();
+               var $messageForm = $('#send-message');
+               var $messageBox = $('#message');
+               var $chat = $('#chat');
+               var $buttonSend = $('#send');
+               
+               var $nickForm = $('#setNick');
+               var $nickBox = $('#nickname');
+               var $users = $('#users');
+               var $closeAlert = $('#closeAlert');
+               
+			   var $parar= $('#STOP');
+			   var $tabla= $('#answers');
+			   var $tablafinal= $('#allAnswers');
+			   var $respuestas1=$('#reponse1'); 
+			   var $respuestas2=$('#reponse2');
+			   var $respuestas3=$('#reponse3');
+			   var $respuestas4=$('#reponse4');
+			   var $respuestas5=$('#reponse5');
+			   var $respuestas6=$('#reponse6');
+			   
+			   
+				var $resp11=$('#11');
+			    var $resp12=$('#12');
+				var $resp13=$('#13');
+				var $resp14=$('#14');
+				var $resp15=$('#15');
+				var $resp16=$('#16');
+
+				var $resul11=$('#r1');
+			    var $resul12=$('#r2');
+				var $resul13=$('#r3');
+				var $resul14=$('#r4');
+				var $resul15=$('#r5');
+				var $resul16=$('#r6');
+				
+				var $resp21=$('#21');
+			    var $resp22=$('#22');
+				var $resp23=$('#23');
+				var $resp24=$('#24');
+				var $resp25=$('#25');
+				var $resp26=$('#26');
+
+				var $resul21=$('#r7');
+			    var $resul22=$('#r8');
+				var $resul23=$('#r9');
+				var $resul24=$('#r10');
+				var $resul25=$('#r11');
+				var $resul26=$('#r12');
+			   
+			   var stopOk = false;
+
+			   $parar.click(function(e){
+					e.preventDefault();
+					socket.emit('STOP');
+					stopOk = true;
+			   });
+
+			   socket.on('STOP2', function() {
+					$tabla.hide();
+					$tablafinal.show();
+			   });
+			   
+			   
+			    //emitir la informacion segun se va escribiendo 
+				$respuestas1.blur(function (e){
+					e.preventDefault();
+					//console.log(document.getElementById("reponse1").value);
+					socket.emit('BLUR', $respuestas1.val(),$respuestas2.val(),$respuestas3.val(),$respuestas4.val(),$respuestas5.val(),$respuestas6.val());
+			   });
+			   $respuestas2.blur(function (e){
+					e.preventDefault();
+					//console.log(document.getElementById("reponse1").value);
+					socket.emit('BLUR', $respuestas1.val(),$respuestas2.val(),$respuestas3.val(),$respuestas4.val(),$respuestas5.val(),$respuestas6.val());
+			   });
+			   $respuestas3.blur(function (e){
+					e.preventDefault();
+					//console.log(document.getElementById("reponse1").value);
+					socket.emit('BLUR', $respuestas1.val(),$respuestas2.val(),$respuestas3.val(),$respuestas4.val(),$respuestas5.val(),$respuestas6.val());
+			   });
+			   $respuestas4.blur(function (e){
+					e.preventDefault();
+					//console.log(document.getElementById("reponse1").value);
+					socket.emit('BLUR', $respuestas1.val(),$respuestas2.val(),$respuestas3.val(),$respuestas4.val(),$respuestas5.val(),$respuestas6.val());
+			   });
+			   $respuestas5.blur(function (e){
+					e.preventDefault();
+					//console.log(document.getElementById("reponse1").value);
+					socket.emit('BLUR', $respuestas1.val(),$respuestas2.val(),$respuestas3.val(),$respuestas4.val(),$respuestas5.val(),$respuestas6.val());
+			   });
+			   $respuestas6.blur(function (e){
+					e.preventDefault();
+					//console.log(document.getElementById("reponse1").value);
+					socket.emit('BLUR', $respuestas1.val(),$respuestas2.val(),$respuestas3.val(),$respuestas4.val(),$respuestas5.val(),$respuestas6.val());
+			   });
+			   
+
+			   var usuarios = [];
+			  socket.on('USERS',function(usuario){
+			  		usuarios = usuario;
+			  		console.log(usuarios);
+			  });
+			   
+			   socket.on('BLUR2', function(user,data1,data2,data3,data4,data5,data6,result1,result2,result3,result4,result5,result6) {
+				if(stopOk==false){	
+					if(user==usuarios[0]){
+						$resp11.text(data1);
+						$resp12.text(data2);
+						$resp13.text(data3);
+						$resp14.text(data4);
+						$resp15.text(data5);
+						$resp16.text(data6);
+						$resul11.text(result1);
+						$resul12.text(result2);
+						$resul13.text(result3);
+						$resul14.text(result4);
+						$resul15.text(result5);
+						$resul16.text(result6);
+
+
+						$tablafinal.show();
+					}
+					if(user==usuarios[1]){
+						$resp21.text(data1);
+						$resp22.text(data2);
+						$resp23.text(data3);
+						$resp24.text(data4);
+						$resp25.text(data5);
+						$resp26.text(data6);
+						$resul21.text(result1);
+						$resul22.text(result2);
+						$resul23.text(result3);
+						$resul24.text(result4);
+						$resul25.text(result5);
+						$resul26.text(result6);
+
+						$tablafinal.show();
+					}
+				}
+                });
+
+			    socket.on('lettre2', function(data) {
+                  $('#let').val(data);
+               	});
+
+
+			   	var letras = 'abcdefghiklmnopqrstuvwxyz';
+			  	$('#Lettre').click(function(e){
+			  		e.preventDefault();
+			  		var rand = Math.floor(Math.random()*letras.length);
+			  		console.log(letras[rand]);
+			  		$('#let').val(letras[rand]);
+			  		socket.emit('lettre', letras[rand]);
+			  		//$('#let').val("a");
+			  		//socket.emit('lettre', "a");
+			  	});
+               
+               $nickForm.click(function(e) {
+                   e.preventDefault();
+                   socket.emit('new user', $nickBox.val(), function(data) {
+                       if(data) {
+                           $('#nickWrap').hide();
+                           $('#contentWrap').show();
+                           $('#Lettre').show();
+                       } else {
+                           $("#login-error").show();
+                       }
+                   });
+                   $nickBox.val('');
+               });
+               
+               $closeAlert.click(function(e) {
+                    $("#login-error").hide();
+               });
+               
+               $messageForm.submit(function(e) {
+                   e.preventDefault();
+                   if($messageBox.val()!='') socket.emit('send message', $messageBox.val());
+                   $messageBox.val('');
+               });
+               
+               socket.on('new message', function(data) {
+                  $chat.append('<b>'+data.nick+":</b> "+data.msg+"<br/>"); 
+               });
+               
+			   var usernames;
+               socket.on('usernames', function(data) {
+                    var html = '';
+                    for (var username in data) {
+                        html += username + '<br/>';
+						usernames=username;
+                    }
+                    $users.html(html);
+                });
+               
+            });
+            
+        </script>
+    </body>
+</html>
