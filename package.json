@@ -1,0 +1,14 @@
+{
+  "name": "Jeu",
+  "version": "0.1.0",
+  "description": "Jeu STOP",
+  "main": "app.js",
+  "repository": "",
+  "author": "JON et ELOY",
+  "dependencies": {
+    "express": "~3.2.4",
+    "socket.io": "~0.9.14",
+    "mysql": "^2.10.2"
+  }
+}
+
