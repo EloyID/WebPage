@@ -1,0 +1,825 @@
+<html>
+    <head>
+        <title>
+            STOP!
+        </title>
+        <style>
+		[class*="col-"] {
+    float: left;
+    padding: 15px;
+}
+.col-1 {width: 20%;}
+.col-2 {width: 80%;}
+.col-3 {width: 25%;}
+.col-4 {width: 33.33%;}
+.col-5 {width: 41.66%;}
+.col-6 {width: 50%;}
+.col-7 {width: 58.33%;}
+.col-8 {width: 66.66%;}
+.col-9 {width: 75%;}
+.col-10 {width: 83.33%;}
+.col-11 {width: 91.66%;}
+.col-12 {width: 100%;}
+		
+		   	#nickWrap{
+                display: none;
+            }
+            #contentWrap{
+                display: none;
+            }
+            #chatWrap{
+                float: left;
+				width: 20%;
+            }
+            #chat{
+                position: relative;
+                width: 100%;
+                float:left;
+                min-height:100px;
+                height: 90%;
+                overflow: auto;
+            }
+			#users{
+				float: right;
+				width: 20%;
+			}
+			#answers{
+			float:center;
+			width: 60%;
+			}
+			#allAnswers
+			{display:none;
+			float:center;
+			width: 60%;
+			}
+			#waiting{
+			display:none;}
+			#newgamediv{
+			display:none;}
+			
+			#againdiv{
+			display:none;}
+			
+        </style>
+        
+        <script src="https://code.jquery.com/jquery.js"></script>
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+        
+    </head>
+    <body>
+    
+        <div class="container">
+        
+            <div class="page-header">
+                <h1>STOP! <small> Developed by Jon Adrián Esteban Peñas et Eloy Jesús del Gran Poder Insunza Díaz</small></h1>
+                <span class="input-group-btn" id="Lettre" style="display: none;">
+                	<!--<div class="col-1"><h5>Lettre</h5>
+                	<input id="let" class="form-control input-lg" type="text" style="width:50px;" align="left"></input></div>-->
+					
+                <table class="table table-bordered" id="puntu" style="float:right; width=30%;">
+				  <thead>
+					<tr>
+					  <th>Lettre</th>
+					  <th id="let"></th>
+					</tr>
+				  </thead>
+				</table>
+                <table class="table table-bordered" id="puntu" style="float:right; width=30%;">
+				  <thead>
+					<tr>
+					  <th id="J1">J1</th>
+					  <th id="P1">0</th>
+					  <th id="J2">J2</th>
+					<th id="P2">0</th>
+					</tr>
+				  </thead>
+				</table></span></div>
+
+            <div class="input-group" style="width:300px;text-align:center;margin:0 auto;" id="sel">
+                    <button class="btn btn-lg btn-primary" type="button" id="nor">NORMAL</button>
+                    <button class="btn btn-lg btn-primary" type="button" id="ar">ARBITRE</button>
+            </div>
+            
+            <div class="input-group" style="width:300px;text-align:center;margin:0 auto;" id="nickWrap">
+                <input id="nickname" class="form-control input-lg" type="text" placeholder="Enter your username">
+                <span class="input-group-btn">
+                    <button class="btn btn-lg btn-primary" type="submit" id="setNick">OK</button>
+                </span>
+            </div>
+			
+            <div class="alert fade in alert-danger alert-dismissable" data-dismiss="alert" id="login-error" style="display:none;">
+                <button type="button" class="close" id="closeAlert">×</button>
+                That username is already taken. Try again.
+            </div>
+            <div id="waiting">
+				<h1>En attente de l'autre joueur</h1>
+				</div>
+            <div id="contentWrap" class="row" style="height: 70%;">
+                <div id="chatWrap"  class="col-md-3">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">Chat</div>
+                        <div id="chat" class="panel-body"></div>
+                    </div>
+                    
+                    <div>
+                        <form id="send-message" class="input-group" style="text-align:center;margin:0 auto;">
+                        <input id="message" class="form-control input-lg" type="text">
+                        <span class="input-group-btn">
+                            <button class="btn btn-lg btn-primary" type="submit">Send</button>
+                        </span>
+                        </form>
+                    </div>
+                    
+                    <!--
+                        <input size="35" id="message"></input>
+                        <input type="submit"></input>
+                    </form>-->
+                </div>
+				
+				
+                <div id="answers" class="col-md-5" >
+                <table class="table table-bordered">
+				  <thead>
+					<tr>
+					  <th>#</th>
+					  <th>Classe</th>
+					  <th>Réponse</th>
+					</tr>
+				  </thead>
+				  <tbody>
+					<tr>
+					  <th scope="row">1</th>
+					  <th>Animaux</th>
+					  <td><input id="reponse1" class="form-control input-lg" type="text" placeholder="Ta réponse ici"></td>
+					</tr>
+					<tr>
+					  <th scope="row">2</th>
+					  <th>Pays</th>
+					  <td><input id="reponse2" class="form-control input-lg" type="text" placeholder="Ta réponse ici"></td>
+					</tr>
+					<tr>
+					  <th scope="row">3</th>
+					  <th>Films</th>
+						<td><input id="reponse3" class="form-control input-lg" type="text" placeholder="Ta réponse ici"></td>    </tr>
+					<tr>
+					  <th scope="row">4</th>
+					  <th>Fleuves</th>
+					  <td><input id="reponse4" class="form-control input-lg" type="text" placeholder="Ta réponse ici"></td>
+					</tr>
+					<tr>
+					  <th scope="row">5</th>
+					  <th>Langages de programmation</th>
+					  <td><input id="reponse5" class="form-control input-lg" type="text" placeholder="Ta réponse ici"></td>
+					</tr>
+					<tr>
+					  <th scope="row">6</th>
+					  <th>Villes</th>
+					  <td><input id="reponse6" class="form-control input-lg" type="text" placeholder="Ta réponse ici"></td>
+					</tr>
+				  </tbody>
+				</table>
+				<span class="input-group-btn">
+                            <button type="button" class="btn btn-danger" type="submit" id="STOP">STOP</button>
+                        </span>
+                </div>
+				
+				<div id="allAnswers" class="col-md-5">
+                <table class="table table-bordered">
+				  <thead>
+					<tr>
+					  <th>Classe</th>
+					  <th>Joueur1</th>
+					  <th>Score</th>
+					  <th>Joueur2</th>
+					  <th>Score</th>
+					</tr>
+				  </thead>
+				  <tbody>
+					<tr>
+					  <th>Animaux</th>
+					  <td id="11"></td>
+					  <td id="r1"></td>
+					  <td id="a1" style="display: none">
+					  	  	<select class="selectpicker" id="s1">
+							  <option>Nulle</option>
+							  <option>Rare</option>
+							  <option>Normal</option>
+							</select>
+					  </td>
+					  <td id="21"></td>
+					  <td id="r7"></td>
+					   <td id="a7" style="display: none">
+					  	  	<select class="selectpicker" id="s7">
+							  <option>Nulle</option>
+							  <option>Rare</option>
+							  <option>Normal</option>
+							</select>
+					  </td>
+					</tr>
+					<tr>
+					  <<th>Pays</th>
+					  <td id="12"></td>
+					  <td id="r2"></></td>
+					  <td id="a2" style="display: none">
+					  	  	<select class="selectpicker" id="s2">
+							  <option>Nulle</option>
+							  <option>Rare</option>
+							  <option>Normal</option>
+							</select>
+					  </td>
+					  <td id="22"></></td>
+					  <td id="r8"></td>
+					   <td id="a8" style="display: none">
+					  	  	<select class="selectpicker" id="s8">
+							  <option>Nulle</option>
+							  <option>Rare</option>
+							  <option>Normal</option>
+							</select>
+					  </td>
+					</tr>
+					<tr>
+					  <th>Films</th>
+					  <td id="13"></td>
+					  <td id="r3"></td>
+					   <td id="a3" style="display: none">
+					  	  	<select class="selectpicker" id="s3">
+							  <option>Nulle</option>
+							  <option>Rare</option>
+							  <option>Normal</option>
+							</select>
+					  </td>
+					  <td id="23"></td>
+					  <td id="r9"></td>
+					   <td id="a9" style="display: none">
+					  	  	<select class="selectpicker" id="s9">
+							  <option>Nulle</option>
+							  <option>Rare</option>
+							  <option>Normal</option>
+							</select>
+					  </td>
+					<tr>
+					  <th>Fleuves</th>
+					  <td id="14"></td>
+					  <td id="r4"></></td>
+					   <td id="a4" style="display: none">
+					  	  	<select class="selectpicker" id="s4">
+							  <option>Nulle</option>
+							  <option>Rare</option>
+							  <option>Normal</option>
+							</select>
+					  </td>
+					  <td id="24"></td>
+					  <td id="r10"></td>
+					   <td id="a10" style="display: none">
+					  	  	<select class="selectpicker" id="s10">
+							  <option>Nulle</option>
+							  <option>Rare</option>
+							  <option>Normal</option>
+							</select>
+					  </td>
+					</tr>
+					<tr>
+					  <th >Langages</th>
+					  <td id="15"></td>
+					  <td id="r5"></td>
+					   <td id="a5" style="display: none">
+					  	  	<select class="selectpicker" id="s5">
+							  <option>Nulle</option>
+							  <option>Rare</option>
+							  <option>Normal</option>
+							</select>
+					  </td>
+					  <td id="25"></td>
+					  <td id="r11"></td>
+					   <td id="a11" style="display: none">
+					  	  	<select class="selectpicker" id="s11">
+							  <option>Nulle</option>
+							  <option>Rare</option>
+							  <option>Normal</option>
+							</select>
+					  </td>
+					</tr>
+					<tr>
+					  <th>Villes</th>
+					  <td id="16"></td>
+					  <td id="r6"></></td>
+					   <td id="a6" style="display: none">
+					  	  	<select class="selectpicker" id="s6">
+							  <option>Nulle</option>
+							  <option>Rare</option>
+							  <option>Normal</option>
+							</select>
+					  </td>
+					  <td id="26"></></td>
+					  <td id="r12"></td>
+					   <td id="a12" style="display: none">
+					  	  	<select class="selectpicker" id="s12">
+							  <option>Nulle</option>
+							  <option>Rare</option>
+							  <option>Normal</option>
+							</select>
+					  </td>
+					</tr>
+				  </tbody>
+				</table>
+				<div id="againdiv" class="col-md-5">
+						<span class="input-group-btn">
+                            <button type="button" class="btn btn-danger" type="submit" id="again">Nouveau tour</button>
+                        </span>
+                </div>
+				<div id="newgamediv">
+						<span class="input-group-btn">
+                            <button type="button" class="btn btn-danger" type="submit" id="newgame">Nouveau jeu</button>
+                        </span>
+                </div>
+                <div id="arbitreBut" style="display: none">
+						<span class="input-group-btn">
+                            <button type="button" class="btn btn-danger" type="submit" >Correction OK</button>
+                        </span>
+                </div>
+                </div>
+				
+				
+                <div class="col-md-2">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            Users
+                        </div>
+                        <div id="users" class="panel-body"></div>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            jQuery(function($) {
+               var socket = io.connect();
+               var $messageForm = $('#send-message');
+               var $messageBox = $('#message');
+               var $chat = $('#chat');
+               var $buttonSend = $('#send');
+               
+               var $nickForm = $('#setNick');
+               var $nickBox = $('#nickname');
+               var $users = $('#users');
+               var $closeAlert = $('#closeAlert');
+			   var $modejeu=0; //2 normal 3 arbitre
+               
+			   var $parar= $('#STOP');
+			   var $again= $('#again'); //boton nouveau tour
+			   var $againzone= $('#againdiv'); //zona donde esta el boton para poder esconderlo
+			   var $newgame= $('#newgame'); //similar con recomenzar
+			   var $newgamezone= $('#newgamediv');
+			   var $waittext=$('#waiting'); //texto que dice esperar al otro
+			   var $tabla= $('#answers');
+			   var $tablafinal= $('#allAnswers');
+			   var $respuestas1=$('#reponse1'); 
+			   var $respuestas2=$('#reponse2');
+			   var $respuestas3=$('#reponse3');
+			   var $respuestas4=$('#reponse4');
+			   var $respuestas5=$('#reponse5');
+			   var $respuestas6=$('#reponse6');
+			   
+			   
+				var $resp11=$('#11');
+			    var $resp12=$('#12');
+				var $resp13=$('#13');
+				var $resp14=$('#14');
+				var $resp15=$('#15');
+				var $resp16=$('#16');
+
+				var $resul11=$('#r1');
+			    var $resul12=$('#r2');
+				var $resul13=$('#r3');
+				var $resul14=$('#r4');
+				var $resul15=$('#r5');
+				var $resul16=$('#r6');
+				
+				var $resp21=$('#21');
+			    var $resp22=$('#22');
+				var $resp23=$('#23');
+				var $resp24=$('#24');
+				var $resp25=$('#25');
+				var $resp26=$('#26');
+
+				var $resul21=$('#r7');
+			    var $resul22=$('#r8');
+				var $resul23=$('#r9');
+				var $resul24=$('#r10');
+				var $resul25=$('#r11');
+				var $resul26=$('#r12');
+				
+				var $J1=$('#J1'); //tabla de puntuaciones
+				var $J2=$('#J2');
+				var $P1=$('#P1');
+				var $P2=$('#P2');
+			   
+			   var stopOk = false;
+
+
+			   $('#nor').click(function(e){
+			   	e.preventDefault();
+			   	//console.log("ADAFA");
+			   	socket.emit('NORMAL');
+				$modejeu=2;
+			   	$('#nickWrap').show();
+			   	$('#sel').hide();
+				
+			   });
+
+			   $('#ar').click(function(e){
+			   	e.preventDefault();
+			   	socket.emit('AR');
+				$modejeu=3;
+				$waittext.text("En attente des autres joueurs");
+			   	$('#nickWrap').show();
+			   	$('#sel').hide();
+			   });
+
+			   socket.on('A',function(){
+			   		$('#nickWrap').show();
+			   		$('#sel').hide();
+			   });
+
+			   $parar.click(function(e){
+					e.preventDefault();
+					socket.emit('STOP');
+					stopOk = true;
+					var respuestas=[$('#r1').text(),$('#r2').text(),$('#r3').text(),$('#r4').text(),$('#r5').text(),$('#r6').text(),$('#r7').text(),$('#r8').text(),$('#r9').text(),$('#r10').text(),$('#r11').text(),$('#r12').text()];
+					socket.emit('PointsFin', respuestas);
+					
+			   });
+			   
+			   socket.on('STOP2', function(data) {
+					//console.log(data);
+					$tabla.hide();
+					$tablafinal.show();
+					if($modejeu==2) {$againzone.show();}
+					 if( usuarios[2] == $nick ){
+					 //console.log("Im here");
+                       			$('#arbitreBut').show();
+								
+                       		}
+					if(data==true){
+					$againzone.hide();
+					if($modejeu!=3){$newgamezone.show();}
+					}
+					if($modejeu==2){socket.emit('FINTABLE',$nick, $respuestas1.val(),$respuestas2.val(),$respuestas3.val(),$respuestas4.val(),$respuestas5.val(),$respuestas6.val());}
+					if($modejeu==3&&usuarios[2]!=$nick){socket.emit('FINTABLE',$nick, $respuestas1.val(),$respuestas2.val(),$respuestas3.val(),$respuestas4.val(),$respuestas5.val(),$respuestas6.val());}
+					
+					
+			   });
+			   
+			   socket.on('FINTABLE2', function(nick, r1,r2,r3,r4,r5,r6) {
+					if(usuarios[0]==nick){
+					$resp11.text(r1);
+					$resp12.text(r2);
+					$resp13.text(r3);
+					$resp14.text(r4);
+					$resp15.text(r5);
+					$resp16.text(r6);
+					}
+					if(usuarios[1]==nick){
+					$resp21.text(r1);
+					$resp22.text(r2);
+					$resp23.text(r3);
+					$resp24.text(r4);
+					$resp25.text(r5);
+					$resp26.text(r6);
+					}
+			   });
+				socket.on('FINTABLE3', function(nick, r1,r2,r3,r4,r5,r6) {
+					if(usuarios[0]==nick){
+					$resul11.text(r1);
+					$resul12.text(r2);
+					$resul13.text(r3);
+					$resul14.text(r4);
+					$resul15.text(r5);
+					$resul16.text(r6);
+					console.log("coucou");
+					}
+					if(usuarios[1]==nick){
+					$resul21.text(r1);
+					$resul22.text(r2);
+					$resul23.text(r3);
+					$resul24.text(r4);
+					$resul25.text(r5);
+					$resul26.text(r6);
+					}
+			   });
+			  
+			   $('#arbitreBut').click(function(e){
+			   		//console.log("APRETADo");
+			   		e.preventDefault();
+			   		//console.log($('#s1').val());
+			   		socket.emit('ARBITRE',$('#s1').val(),$('#s2').val(),$('#s3').val(),$('#s4').val(),$('#s5').val(),$('#s6').val(),$('#s7').val(),$('#s8').val(),$('#s9').val(),$('#s10').val(),$('#s11').val(),$('#s12').val());
+					
+					$('#r1').show();$('#r2').show();$('#r3').show();$('#r4').show();$('#r5').show();$('#r6').show();$('#r7').show();$('#r8').show();$('#r9').show();$('#r10').show();$('#r11').show();$('#r12').show();                       			
+                    $('#a1').hide();$('#a2').hide();$('#a3').hide();$('#a4').hide();$('#a5').hide();$('#a6').hide();$('#a7').hide();$('#a8').hide();$('#a9').hide();$('#a10').hide();$('#a11').hide();$('#a12').hide();
+								
+					
+			   });
+
+			   socket.on('ARBITRE2',function(r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,finito){
+			   	//console.log(r1);
+			   		$resul11.text(r1);
+			   		$resul12.text(r2);
+			   		$resul13.text(r3);
+			   		$resul14.text(r4);
+			   		$resul15.text(r5);
+			   		$resul16.text(r6);
+
+			   		$resul21.text(r7);
+			   		$resul22.text(r8);
+			   		$resul23.text(r9);
+			   		$resul24.text(r10);
+			   		$resul25.text(r11);
+			   		$resul26.text(r12);
+					$againzone.show();
+					if( usuarios[2] == $nick ){
+					 $('#arbitreBut').hide();
+					 $againzone.hide();
+					 $waittext.show();
+                       		}
+					//console.log(finito);
+					//console.log("finito");
+					if(finito==true){
+					$newgamezone.show();
+					$againzone.hide();
+					}
+			   });
+			   
+			   //cuando queremos nueva ronda
+			   $again.click(function(e){
+					e.preventDefault();
+					socket.emit('AGAIN');
+					$waittext.show();
+					$againzone.hide();
+			   });
+			   
+			   socket.on('POINTS', function(data){
+				$P1.text(data[0]);
+				$P2.text(data[1]);
+				
+				
+
+			   });
+			   
+			   //cuando los dos estan listos esto borra la tabla
+			   socket.on('AGAIN2', function() {
+					$respuestas1.val('');
+					$respuestas2.val('');
+					$respuestas3.val('');
+					$respuestas4.val('');
+					$respuestas5.val('');
+					$respuestas6.val('');
+					$tabla.show();
+					$waittext.hide();
+					$tablafinal.hide();
+					$resp11.text('');
+					$resp12.text('');
+					$resp13.text('');
+					$resp14.text('');
+					$resp15.text('');
+					$resp16.text('');
+					$resp21.text('');
+					$resp22.text('');
+					$resp23.text('');
+					$resp24.text('');
+					$resp25.text('');
+					$resp26.text('');
+					$resul11.text('');
+					 $resul12.text('');
+					 $resul13.text('');
+					 $resul14.text('');
+					 $resul15.text('');
+					 $resul16.text('');
+					 $resul21.text('');
+					 $resul22.text('');
+					 $resul23.text('');
+					 $resul24.text('');
+					 $resul25.text('');
+					 $resul26.text('');
+					if( usuarios[2] == $nick ){
+                  			//console.log("HDADJAKE");
+                  	            $tabla.hide();
+                       			$tablafinal.show();
+								$('#r1').hide();$('#r2').hide();$('#r3').hide();$('#r4').hide();$('#r5').hide();$('#r6').hide();$('#r7').hide();$('#r8').hide();$('#r9').hide();$('#r10').hide();$('#r11').hide();$('#r12').hide();                       			
+                       			$('#a1').show();$('#a2').show();$('#a3').show();$('#a4').show();$('#a5').show();$('#a6').show();$('#a7').show();$('#a8').show();$('#a9').show();$('#a10').show();$('#a11').show();$('#a12').show();
+								
+								$('#arbitreBut').hide();
+                       			$('#againdiv').hide();
+                       			//$nick = "";
+                       		}
+			   });
+
+			   //cuando pedimos nuevo juego
+			   $newgame.click(function(e){
+					e.preventDefault();
+					socket.emit('NEWGAME');
+					$waittext.show();
+					$newgamezone.hide();
+			   });
+			   
+			   //cuando los dos estan listos para un nuevo juego
+			   socket.on('NEWGAME2', function(){
+					$respuestas1.val('');
+					$respuestas2.val('');
+					$respuestas3.val('');
+					$respuestas4.val('');
+					$respuestas5.val('');
+					$respuestas6.val('');
+					$tabla.show();
+					$waittext.hide();
+					$tablafinal.hide();
+					if( usuarios[2] == $nick ){
+                  			//console.log("HDADJAKE");
+                  	            $tabla.hide();
+                       			$tablafinal.show();
+								$('#r1').hide();$('#r2').hide();$('#r3').hide();$('#r4').hide();$('#r5').hide();$('#r6').hide();$('#r7').hide();$('#r8').hide();$('#r9').hide();$('#r10').hide();$('#r11').hide();$('#r12').hide();                       			
+                       			$('#a1').show();$('#a2').show();$('#a3').show();$('#a4').show();$('#a5').show();$('#a6').show();$('#a7').show();$('#a8').show();$('#a9').show();$('#a10').show();$('#a11').show();$('#a12').show();
+								$resp11.text('');
+								$resp12.text('');
+								$resp13.text('');
+								$resp14.text('');
+								$resp15.text('');
+								$resp16.text('');
+								$resp21.text('');
+								$resp22.text('');
+								$resp23.text('');
+								$resp24.text('');
+								$resp25.text('');
+								$resp26.text('');
+								$('#arbitreBut').hide();
+                       			$('#againdiv').hide();
+                       			//$nick = "";
+                       		}
+			   });
+			   
+			   
+			   
+			    //emitir la informacion segun se va escribiendo 
+				$respuestas1.blur(function (e){
+					e.preventDefault();
+					//console.log($nick);
+					socket.emit('BLUR',$nick, $respuestas1.val(),$respuestas2.val(),$respuestas3.val(),$respuestas4.val(),$respuestas5.val(),$respuestas6.val());
+			   });
+			   $respuestas2.blur(function (e){
+					e.preventDefault();
+					////console.log(document.getElementById("reponse1").value);
+					socket.emit('BLUR',$nick,$respuestas1.val(),$respuestas2.val(),$respuestas3.val(),$respuestas4.val(),$respuestas5.val(),$respuestas6.val());
+			   });
+			   $respuestas3.blur(function (e){
+					e.preventDefault();
+					//console.log(document.getElementById("reponse1").value);
+					socket.emit('BLUR',$nick, $respuestas1.val(),$respuestas2.val(),$respuestas3.val(),$respuestas4.val(),$respuestas5.val(),$respuestas6.val());
+			   });
+			   $respuestas4.blur(function (e){
+					e.preventDefault();
+					//console.log(document.getElementById("reponse1").value);
+					socket.emit('BLUR',$nick, $respuestas1.val(),$respuestas2.val(),$respuestas3.val(),$respuestas4.val(),$respuestas5.val(),$respuestas6.val());
+			   });
+			   $respuestas5.blur(function (e){
+					e.preventDefault();
+					//console.log(document.getElementById("reponse1").value);
+					socket.emit('BLUR',$nick, $respuestas1.val(),$respuestas2.val(),$respuestas3.val(),$respuestas4.val(),$respuestas5.val(),$respuestas6.val());
+			   });
+			   $respuestas6.blur(function (e){
+					e.preventDefault();
+					//console.log(document.getElementById("reponse1").value);
+					socket.emit('BLUR',$nick, $respuestas1.val(),$respuestas2.val(),$respuestas3.val(),$respuestas4.val(),$respuestas5.val(),$respuestas6.val());
+			   });
+			   
+
+			   var usuarios = [];
+			  socket.on('USERS',function(usuario){
+			  		usuarios = usuario;
+			  		//console.log(usuarios);
+					$J1.text(usuarios[0]);
+					$J2.text(usuarios[1]);
+			  });
+			   
+			   socket.on('BLUR2', function(user,data1,data2,data3,data4,data5,data6,result1,result2,result3,result4,result5,result6,sending) {
+				if(stopOk==false){	
+					if(user==usuarios[0]){
+						$resp11.text(data1);
+						$resp12.text(data2);
+						$resp13.text(data3);
+						$resp14.text(data4);
+						$resp15.text(data5);
+						$resp16.text(data6);
+						$resul11.text(result1);
+						$resul12.text(result2);
+						$resul13.text(result3);
+						$resul14.text(result4);
+						$resul15.text(result5);
+						$resul16.text(result6);
+						$P1.text(sending);
+
+						$tablafinal.show();
+					}
+					if(user==usuarios[1]){
+						$resp21.text(data1);
+						$resp22.text(data2);
+						$resp23.text(data3);
+						$resp24.text(data4);
+						$resp25.text(data5);
+						$resp26.text(data6);
+						$resul21.text(result1);
+						$resul22.text(result2);
+						$resul23.text(result3);
+						$resul24.text(result4);
+						$resul25.text(result5);
+						$resul26.text(result6);
+						$P2.text(sending);
+						$tablafinal.show();
+					}
+				}
+                });
+
+			    socket.on('lettre2', function(data) {
+                  $('#let').text(data);
+               	});
+
+
+			   	/*var letras = 'abcdefghilmnopqrstuvz';
+			  	$('#Lettre').click(function(e){
+			  		e.preventDefault();
+			  		var rand = Math.floor(Math.random()*letras.length);
+			  		console.log(letras[rand]);
+			  		$('#let').val(letras[rand]);
+			  		socket.emit('lettre', letras[rand]);
+			  	});*/
+               $nick = "";
+               $nickForm.click(function(e) {
+                   e.preventDefault();
+                   socket.emit('new user', $nickBox.val(), function(data) {
+                       if(data) {
+                           $('#nickWrap').hide();
+							$waittext.show();
+                       } else {
+                           $("#login-error").show();
+                       }
+                   });
+                   $nick = $nickBox.val();
+                   $nickBox.val('');
+               });
+		
+
+			   //cuando ya hay dos jugadores para empezar a jugar
+			   socket.on('joueursprets', function() {
+                  $waittext.hide(); 
+                   $('#contentWrap').show();
+                   $('#Lettre').show();
+                   if( usuarios[2] == $nick ){
+                  			//console.log("HDADJAKE");
+                  	            $tabla.hide();
+                       			$tablafinal.show();
+								$('#r1').hide();$('#r2').hide();$('#r3').hide();$('#r4').hide();$('#r5').hide();$('#r6').hide();$('#r7').hide();$('#r8').hide();$('#r9').hide();$('#r10').hide();$('#r11').hide();$('#r12').hide();                       			
+                       			$('#a1').show();$('#a2').show();$('#a3').show();$('#a4').show();$('#a5').show();$('#a6').show();$('#a7').show();$('#a8').show();$('#a9').show();$('#a10').show();$('#a11').show();$('#a12').show();
+                       			$('#arbitreBut').hide();
+                       			$('#againdiv').hide();
+                       			//$nick = "";
+                       		}
+
+               });
+               
+               $closeAlert.click(function(e) {
+                    $("#login-error").hide();
+               });
+               
+               $messageForm.submit(function(e) {
+                   e.preventDefault();
+                   if($messageBox.val()!='') socket.emit('send message', $messageBox.val());
+                   $messageBox.val('');
+               });
+               
+               socket.on('new message', function(data) {
+                  $chat.append('<b>'+data.nick+":</b> "+data.msg+"<br/>"); 
+               });
+               
+			   var usernames;
+               socket.on('usernames', function(data) {
+                    var html = '';
+                    for (var username in data) {
+                        html += username + '<br/>';
+						usernames=username;
+                    }
+                    $users.html(html);
+                });
+               
+            });
+            
+        </script>
+    </body>
+</html>
